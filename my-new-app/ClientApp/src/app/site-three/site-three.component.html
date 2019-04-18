@@ -1,3 +1,40 @@
-<p>
-  site-three works!
-</p>
+<h1>Objekte</h1>
+
+<p *ngIf="!objekte"><em>Loading...</em></p>
+
+<table class='table table-striped' *ngIf="objekte">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Besitzer</th>
+      <th>Einheiten</th>
+      <th class="text-right"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let objekt of objekte">
+      <td>{{ objekt.objektId }}</td>
+      <td>{{ objekt.name }}</td>
+      <td>{{ objekt.besitzer?.name }}</td>
+      <td>{{ objekt.einheiten }}</td>
+      <td class="text-right"><button (click)="delete(objekt.objektId)" class="btn btn-danger text-right">Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<form (ngSubmit)="submit(ObjektForm)" #ObjektForm="ngForm">
+  <div class="form-group">
+    <label for="exampleInputliegenschaft1">Liegenschaft</label>
+    <input [(ngModel)]="newObjekt.name" name="name" class="form-control" id="exampleInputliegenschaft1"
+      aria-describedby="liegenschaftHelp" placeholder="Enter liegenschaft">
+  </div>
+  <div class="form-group">
+    <select class="custom-select" [(ngModel)]="newObjekt.besitzer" name="besitzer">
+      <option *ngFor="let person of personen" [ngValue]="person">{{ person.name }}</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{{newObjekt | json}}
